@@ -1,0 +1,71 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+
+```{r setup}
+
+library(tidyverse)
+```
+
+
+
+## Скачивание и импорт данных 
+
+
+```{r download}
+download.file("https://github.com/bivni/tidy_demo/raw/master/world_population.csv",
+              destfile = "world_population.csv")
+
+```
+```{r import}
+world_population <- readr::read_csv(file="world_population.csv", na="-")
+
+```
+
+
+
+```{r}
+print(world_population,n=14)
+```
+
+Какие проблемы импорта? В каких строках 
+
+
+```{r problems}
+problems(world_population)
+```
+
+
+
+
+
+
+
+## Используем tidyr
+
+
+```{r gather}
+long_world_population <- tidyr::gather(world_population,year, population,
+                                       -c(COUNTRY,COUNTRY_CODE,INDICATOR_NAME,
+                                          INDICATOR_CODE))
+```
+
+
+
+```{r}
+head(long_world_population,20)
+```
+
+
+Удалим столбцы
+
+
+```{r remove_columns}
+clean_world_population <-  long_world_population %>% 
+          select( -starts_with("INDICATOR")) 
+print(clean_world_population)
+```
+
+
