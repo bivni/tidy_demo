@@ -1,7 +1,27 @@
 ---
-title: "R Notebook"
-output: html_notebook
+title: "Демонстрация пакетов readr и tydyr"
+output:
+  html_document:
+    df_print: paged
 ---
+> Encoding: UTF-8  (File->Open with enconding)
+
+Решается задача импорта и приведения данных в форму пригодной для анализа "tidy data"
+
+Используем пакеты из набора `tidyverse`:
+
+* readr
+* tydyr
+* dplyr
+
+### Сценарий 
+
+В файле `world_population.csv` в текстовой форме с разделителями "," находятся данные о населелении стран мира.  
+
+Данные в файле размещены в "широком формате", напоминающем сводную таблицу. Номера годов образуют заголовки столбцо, названия - заголовки строк, а в пересечении -- численность населения страны в токой-то год.
+
+Требуется представить данные в более организованной, более похожей на таблицы в реляционной базе данных, форме.
+
 
 
 ```{r setup}
@@ -19,9 +39,11 @@ download.file("https://github.com/bivni/tidy_demo/raw/master/world_population.cs
               destfile = "world_population.csv")
 
 ```
+
+импортируем 
+
 ```{r import}
 world_population <- readr::read_csv(file="world_population.csv", na="-")
-
 ```
 
 
