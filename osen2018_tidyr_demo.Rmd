@@ -4,6 +4,10 @@ output:
   html_document:
     df_print: paged
 ---
+
+Этот документ и связанные файлы на [github](https://github.com/bivni/tidy_demo)
+
+
 > Encoding: UTF-8  (File->Open with enconding)
 
 Решается задача импорта и приведения данных в форму пригодной для анализа "tidy data"
