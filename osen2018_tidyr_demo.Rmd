@@ -98,26 +98,39 @@ world_population_text[1:3]
 
 А как в проблемных строках?
 
-```{r promlem_text_lines}
-world_population_text[num_problem_rows+2] # учитываем, что в 1 строке заголовок 
+```{r problem_text_lines}
+# учитываем, что в 1 строке заголовок 
+problem_text_lines <- world_population_text[num_problem_rows+2] 
+problem_text_lines
 ```
 
 ```{r escape_1st_comma }
-escape_1st_comma <- stringr::str_replace(string = world_population_text[num_problem_rows+2],
-                     pattern = ",","\\\\,")
-escape_1st_comma
+splited_to_2nd_comma_matr <- stringr::str_split_fixed(string = problem_text_lines,
+                     pattern = ",",n=3)
+dim(splited_to_2nd_comma_matr)
+splited_to_2nd_comma_matr
+```
+```{r quote_problem}
+quoted_problem_strings <- stringr::str_c('"',splited_to_2nd_comma_matr[,1],",",splited_to_2nd_comma_matr[,2],'"',
+               ",",splited_to_2nd_comma_matr[,3],sep="")
+quoted_problem_strings
 ```
 
 
 ```{r replace problem rows}
-world_population_text[num_problem_rows+2] <- escape_1st_comma
+world_population_text[num_problem_rows+2] <- quoted_problem_strings
 readr::write_lines(world_population_text,"world_population2.csv")
 ```
 
 ```{r}
-readr::read_csv("world_population2.csv",na="-", )
+world_population <- readr::read_csv("world_population2.csv",na="-" , comment="Not classified,INX,") # escape_backslash=T,delim = ','
+world_population
+
 ```
 
+```{r}
+problems(world_population)$row
+```
 
 ## Используем tidyr
 
