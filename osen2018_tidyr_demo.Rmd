@@ -40,9 +40,13 @@ library(tidyverse)
 ## Скачивание и импорт данных 
 
 
+Добавил параметр `mode="wb"` для Windows. Это повлияло на функцию `readr::read_lines()`, которая применяется в середине демонстрации. По умолчаню функция `download.file()`  преобразует символы окончания строк `\n -> \r\n`. И функция `read_lines()` начинает выдавать пустые строки. Функция `read_csv()' не подвержена этой проблеме.
+
 ```{r download}
 download.file("https://github.com/bivni/tidy_demo/raw/master/world_population.csv",
-        destfile = "world_population.csv")
+        destfile = "world_population.csv"
+       ,mode="wb")
+
 ```
 
 импортируем 
@@ -63,6 +67,7 @@ print(world_population,n=14)
 
 ```{r problems}
 problems(world_population)
+
 ```
 
 Судя по указанной ошибке в значениях данных встречается символ-разделитель ","

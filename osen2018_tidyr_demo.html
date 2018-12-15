@@ -1599,19 +1599,30 @@ $(document).ready(function () {
 <p>Данные в файле размещены в “широком формате”, напоминающем сводную таблицу. Номера годов образуют заголовки столбцо, названия - заголовки строк, а в пересечении – численность населения страны в токой-то год.</p>
 <p>Требуется представить данные в более организованной, более похожей на таблицы в реляционной базе данных, форме.</p>
 <pre class="r"><code>library(tidyverse)</code></pre>
-<pre><code>## ── Attaching packages ──────────────────────────────────────────────────────── tidyverse 1.2.1 ──</code></pre>
-<pre><code>## ✔ ggplot2 3.0.0     ✔ purrr   0.2.5
-## ✔ tibble  1.4.2     ✔ dplyr   0.7.6
-## ✔ tidyr   0.8.1     ✔ stringr 1.3.1
-## ✔ readr   1.1.1     ✔ forcats 0.3.0</code></pre>
-<pre><code>## ── Conflicts ─────────────────────────────────────────────────────────── tidyverse_conflicts() ──
-## ✖ dplyr::filter() masks stats::filter()
-## ✖ dplyr::lag()    masks stats::lag()</code></pre>
+<pre><code>## Warning: package &#39;tidyverse&#39; was built under R version 3.5.1</code></pre>
+<pre><code>## -- Attaching packages ----------------------------- tidyverse 1.2.1 --</code></pre>
+<pre><code>## v ggplot2 3.0.0     v purrr   0.2.5
+## v tibble  1.4.2     v dplyr   0.7.6
+## v tidyr   0.8.1     v stringr 1.3.1
+## v readr   1.1.1     v forcats 0.3.0</code></pre>
+<pre><code>## Warning: package &#39;ggplot2&#39; was built under R version 3.5.1</code></pre>
+<pre><code>## Warning: package &#39;tibble&#39; was built under R version 3.5.1</code></pre>
+<pre><code>## Warning: package &#39;tidyr&#39; was built under R version 3.5.1</code></pre>
+<pre><code>## Warning: package &#39;readr&#39; was built under R version 3.5.1</code></pre>
+<pre><code>## Warning: package &#39;purrr&#39; was built under R version 3.5.1</code></pre>
+<pre><code>## Warning: package &#39;dplyr&#39; was built under R version 3.5.1</code></pre>
+<pre><code>## Warning: package &#39;stringr&#39; was built under R version 3.5.1</code></pre>
+<pre><code>## Warning: package &#39;forcats&#39; was built under R version 3.5.1</code></pre>
+<pre><code>## -- Conflicts -------------------------------- tidyverse_conflicts() --
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()</code></pre>
 </div>
 <div id="---" class="section level2">
 <h2>Скачивание и импорт данных</h2>
+<p>Добавил параметр <code>mode=&quot;wb&quot;</code> для Windows. Это повлияло на функцию <code>readr::read_lines()</code>, которая применяется в середине демонстрации. По умолчаню функция <code>download.file()</code> преобразует символы окончания строк <code>\n -&gt; \r\n</code>. И функция <code>read_lines()</code> начинает выдавать пустые строки. Функция `read_csv()’ не подвержена этой проблеме.</p>
 <pre class="r"><code>download.file(&quot;https://github.com/bivni/tidy_demo/raw/master/world_population.csv&quot;,
-        destfile = &quot;world_population.csv&quot;)</code></pre>
+        destfile = &quot;world_population.csv&quot;
+       ,mode=&quot;wb&quot;)</code></pre>
 <p>импортируем</p>
 <pre class="r"><code>world_population &lt;- readr::read_csv(file=&quot;world_population.csv&quot;, na=&quot;-&quot;,
                                      comment=&quot;Not classified,INX,&quot;)</code></pre>
@@ -1634,27 +1645,27 @@ $(document).ready(function () {
 <pre><code>## Warning in rbind(names(probs), probs_f): number of columns of result is not
 ## a multiple of vector length (arg 1)</code></pre>
 <pre><code>## Warning: 13 parsing failures.
-## row # A tibble: 5 x 5 col     row col   expected   actual     file                   expected   &lt;int&gt; &lt;chr&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;                  actual 1    29 &lt;NA&gt;  64 columns 65 columns 'world_population.csv' file 2    50 &lt;NA&gt;  64 columns 65 columns 'world_population.csv' row 3    67 &lt;NA&gt;  64 columns 65 columns 'world_population.csv' col 4    76 &lt;NA&gt;  64 columns 65 columns 'world_population.csv' expected 5    99 &lt;NA&gt;  64 columns 65 columns 'world_population.csv'
+## row # A tibble: 5 x 5 col     row col   expected   actual     file                   expected   &lt;int&gt; &lt;chr&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;                  actual 1    29 &lt;NA&gt;  64 columns 65 columns &#39;world_population.csv&#39; file 2    50 &lt;NA&gt;  64 columns 65 columns &#39;world_population.csv&#39; row 3    67 &lt;NA&gt;  64 columns 65 columns &#39;world_population.csv&#39; col 4    76 &lt;NA&gt;  64 columns 65 columns &#39;world_population.csv&#39; expected 5    99 &lt;NA&gt;  64 columns 65 columns &#39;world_population.csv&#39;
 ## ... ................. ... .......................................................... ........ .......................................................... ...... .......................................................... .... .......................................................... ... .......................................................... ... .......................................................... ........ ..........................................................
 ## See problems(...) for more details.</code></pre>
 <pre class="r"><code>print(world_population,n=14)</code></pre>
 <pre><code>## # A tibble: 214 x 64
 ##    COUNTRY COUNTRY_CODE INDICATOR_NAME INDICATOR_CODE `1960` `1961` `1962`
 ##    &lt;chr&gt;   &lt;chr&gt;        &lt;chr&gt;          &lt;chr&gt;          &lt;chr&gt;   &lt;int&gt;  &lt;int&gt;
-##  1 Bermuda BMU          Population (T… SP.POP.TOTL    44400  4.55e4 4.66e4
-##  2 Bolivia BOL          Population (T… SP.POP.TOTL    33531… 3.43e6 3.51e6
-##  3 Brazil  BRA          Population (T… SP.POP.TOTL    72775… 7.50e7 7.73e7
-##  4 Barbad… BRB          Population (T… SP.POP.TOTL    230858 2.32e5 2.33e5
-##  5 Brunei… BRN          Population (T… SP.POP.TOTL    81817  8.57e4 8.96e4
-##  6 Bhutan  BTN          Population (T… SP.POP.TOTL    224155 2.29e5 2.35e5
-##  7 Botswa… BWA          Population (T… SP.POP.TOTL    524173 5.37e5 5.50e5
-##  8 Croatia HRV          Population (T… SP.POP.TOTL    41400… 4.17e6 4.20e6
-##  9 Haiti   HTI          Population (T… SP.POP.TOTL    38692… 3.95e6 4.03e6
-## 10 Hungary HUN          Population (T… SP.POP.TOTL    99839… 1.00e7 1.01e7
-## 11 Indone… IDN          Population (T… SP.POP.TOTL    88692… 9.09e7 9.31e7
-## 12 Isle o… IMN          Population (T… SP.POP.TOTL    48441  4.84e4 4.86e4
-## 13 India   IND          Population (T… SP.POP.TOTL    44959… 4.59e8 4.68e8
-## 14 Ireland IRL          Population (T… SP.POP.TOTL    28286… 2.82e6 2.84e6
+##  1 Bermuda BMU          Population (T~ SP.POP.TOTL    44400  4.55e4 4.66e4
+##  2 Bolivia BOL          Population (T~ SP.POP.TOTL    33531~ 3.43e6 3.51e6
+##  3 Brazil  BRA          Population (T~ SP.POP.TOTL    72775~ 7.50e7 7.73e7
+##  4 Barbad~ BRB          Population (T~ SP.POP.TOTL    230858 2.32e5 2.33e5
+##  5 Brunei~ BRN          Population (T~ SP.POP.TOTL    81817  8.57e4 8.96e4
+##  6 Bhutan  BTN          Population (T~ SP.POP.TOTL    224155 2.29e5 2.35e5
+##  7 Botswa~ BWA          Population (T~ SP.POP.TOTL    524173 5.37e5 5.50e5
+##  8 Croatia HRV          Population (T~ SP.POP.TOTL    41400~ 4.17e6 4.20e6
+##  9 Haiti   HTI          Population (T~ SP.POP.TOTL    38692~ 3.95e6 4.03e6
+## 10 Hungary HUN          Population (T~ SP.POP.TOTL    99839~ 1.00e7 1.01e7
+## 11 Indone~ IDN          Population (T~ SP.POP.TOTL    88692~ 9.09e7 9.31e7
+## 12 Isle o~ IMN          Population (T~ SP.POP.TOTL    48441  4.84e4 4.86e4
+## 13 India   IND          Population (T~ SP.POP.TOTL    44959~ 4.59e8 4.68e8
+## 14 Ireland IRL          Population (T~ SP.POP.TOTL    28286~ 2.82e6 2.84e6
 ## # ... with 200 more rows, and 57 more variables: `1963` &lt;int&gt;,
 ## #   `1964` &lt;int&gt;, `1965` &lt;int&gt;, `1966` &lt;int&gt;, `1967` &lt;int&gt;, `1968` &lt;int&gt;,
 ## #   `1969` &lt;int&gt;, `1970` &lt;int&gt;, `1971` &lt;int&gt;, `1972` &lt;int&gt;, `1973` &lt;int&gt;,
@@ -1750,7 +1761,7 @@ dim(splited_to_2nd_comma_matr)</code></pre>
 ## [11,] &quot;VEN,Population (Total),SP.POP.TOTL,7580281,7872644,8172322,8477485,8785731,9095742,9406598,9719951,10040248,10373554,10724328,11093065,11478612,11881567,12302193,12739894,13196169,13669054,14150223,14628595,15096432,15549525,15990376,16426198,16867806,17322754,17793283,18275997,18766017,19256060,19740786,20218813,20691641,21160262,21626607,22092144,22556838,23020184,23482700,23945002,24407553,24870441,25333622,25797219,26261326,26725897,27190882,27655937,28120312,28583040,29043283,29500625,29954782, - , - , - , - , - , - , - &quot;        
 ## [12,] &quot;YEM,Population (Total),SP.POP.TOTL,5099785,5184477,5276093,5372934,5472775,5573959,5677339,5783454,5890204,5994901,6096574,6193897,6290197,6394922,6520690,6676714,6866630,7088585,7339452,7613672,7906977,8220933,8557021,8910830,9276622,9651313,10028064,10409987,10815614,11270427,11790249,12384543,13040955,13726827,14396720,15018201,15578640,16088019,16564235,17035531,17522537,18029989,18551068,19081306,19612696,20139661,20661714,21182162,21703571,22229625,22763008,23304206,23852409, - , - , - , - , - , - , - &quot;                          
 ## [13,] &quot;COD,Population (Total),SP.POP.TOTL,15248246,15637715,16041247,16461914,16903899,17369859,17861860,18378189,18913177,19458874,20009902,20563258,21121467,21691346,22282713,22902275,23554958,24238011,24941431,25650884,26357407,27060353,27767775,28490510,29243529,30039873,30871855,31740965,32679158,33727905,34910591,36253025,37731020,39257294,40711816,42012524,43122601,44078397,44960941,45889100,46949244,48167045,49516960,50972323,52487293,54028003,55590838,57187942,58819038,60486276,62191161,63931512,65705093, - , - , - , - , - , - , - &quot;</code></pre>
-<pre class="r"><code>quoted_problem_strings &lt;- stringr::str_c('&quot;',splited_to_2nd_comma_matr[,1],&quot;,&quot;,splited_to_2nd_comma_matr[,2],'&quot;',
+<pre class="r"><code>quoted_problem_strings &lt;- stringr::str_c(&#39;&quot;&#39;,splited_to_2nd_comma_matr[,1],&quot;,&quot;,splited_to_2nd_comma_matr[,2],&#39;&quot;&#39;,
                &quot;,&quot;,splited_to_2nd_comma_matr[,3],sep=&quot;&quot;)
 quoted_problem_strings</code></pre>
 <pre><code>##  [1] &quot;\&quot;Korea, Rep.\&quot;,KOR,Population (Total),SP.POP.TOTL,25012374,25765673,26513030,27261747,27984155,28704674,29435571,30130983,30838302,31544266,32240827,32882704,33505406,34103149,34692266,35280725,35848523,36411795,36969185,37534236,38123775,38723248,39326352,39910403,40405956,40805744,41213674,41621690,42031247,42449038,42869283,43295704,43747962,44194628,44641540,45092991,45524681,45953580,46286503,46616677,47008111,47357362,47622179,47859311,48039415,48138077,48371946,48597652,48948698,49182038,49410366,49779440,50004441, - , - , - , - , - , - , - &quot;     
@@ -1768,7 +1779,7 @@ quoted_problem_strings</code></pre>
 ## [13] &quot;\&quot;Congo, Dem. Rep.\&quot;,COD,Population (Total),SP.POP.TOTL,15248246,15637715,16041247,16461914,16903899,17369859,17861860,18378189,18913177,19458874,20009902,20563258,21121467,21691346,22282713,22902275,23554958,24238011,24941431,25650884,26357407,27060353,27767775,28490510,29243529,30039873,30871855,31740965,32679158,33727905,34910591,36253025,37731020,39257294,40711816,42012524,43122601,44078397,44960941,45889100,46949244,48167045,49516960,50972323,52487293,54028003,55590838,57187942,58819038,60486276,62191161,63931512,65705093, - , - , - , - , - , - , - &quot;</code></pre>
 <pre class="r"><code>world_population_text[num_problem_rows+2] &lt;- quoted_problem_strings
 readr::write_lines(world_population_text,&quot;world_population2.csv&quot;)</code></pre>
-<pre class="r"><code>world_population &lt;- readr::read_csv(&quot;world_population2.csv&quot;,na=&quot;-&quot; , comment=&quot;Not classified,INX,&quot;) # escape_backslash=T,delim = ','</code></pre>
+<pre class="r"><code>world_population &lt;- readr::read_csv(&quot;world_population2.csv&quot;,na=&quot;-&quot; , comment=&quot;Not classified,INX,&quot;) # escape_backslash=T,delim = &#39;,&#39;</code></pre>
 <pre><code>## Parsed with column specification:
 ## cols(
 ##   .default = col_integer(),
