@@ -137,7 +137,12 @@ world_population
 problems(world_population)$row
 ```
 
-## ??спользуем tidyr
+## Используем tidyr
+
+Пакет позволяет реструктуризировать данные 
+
+Подробнее <https://r4ds.had.co.nz/tidy-data.html>
+
 
 
 ```{r gather}
