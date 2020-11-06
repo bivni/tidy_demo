@@ -19,6 +19,8 @@ output:
 * readr
 * tydyr
 * dplyr
+* stringr
+  
 
 ### Сценарий 
 
