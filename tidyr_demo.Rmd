@@ -20,6 +20,7 @@ output:
 * tydyr
 * dplyr
 * stringr
+* tibble
   
 
 ### Сценарий 
@@ -41,6 +42,85 @@ library(tidyverse)
 
 ## Скачивание и импорт данных 
 
+```{r}
+text_seasons <-  
+"season;fuel;energy
+Зима;132;13,5
+Весна;100;10,5
+Лето;50;5
+Осень;НД;13"
+```
+
+
+```{r}
+text_seasons_narrow <-  
+"season;indicator;value
+Зима;energy;132
+Зима;fuel;13,5
+Весна;energy;100
+Весна;fuel;10,5
+Лето;energy;50
+Лето;fuel;5
+Осень;energy;НД
+Осень;fuel;13"
+```
+
+```{r}
+seasons_narrow <- read_csv2(text_seasons_narrow, na='НД')
+
+```
+
+```{r}
+str(seasons_narrow)
+```
+
+```{r}
+seasons1 <- read_delim(text_seasons,delim=";")
+str(seasons1)
+```
+```{r}
+seasons1 <- read_delim(text_seasons,delim=";",locale=locale(decimal_mark = ","))
+str(seasons1)
+```
+
+
+```{r}
+seasons <-
+  read_csv2(  text_seasons
+ ,
+   col_types = cols(.default = "d", season = "c")
+  )
+
+seasons
+str(seasons)
+```
+
+```{r}
+problems(seasons)
+```
+
+```{r}
+seasons <-
+  read_csv2(  text_seasons
+ ,
+   col_types = cols(.default = "d", season = "c")
+  )
+
+seasons
+str(seasons)
+```
+
+```{r}
+seasons2 <-
+  read_csv2(  text_seasons
+ ,
+   na='НД'
+  )
+
+seasons2
+str(seasons)
+```
+
 
 Добавил параметр `mode="wb"` для Windows. Это повлияло на функцию `readr::read_lines()`, которая применяется в середине демонстрации. По умолчаню функция `download.file()`  преобразует символы окончания строк `\n -> \r\n`. ?? функция `read_lines()` начинает выдавать пустые строки. Функция `read_csv()' не подвержена этой проблеме.
 
@@ -53,7 +133,7 @@ download.file("https://github.com/bivni/tidy_demo/raw/master/world_population.cs
 
 импортируем 
 
-```{r import}
+```{r wrong_import}
 world_population <- readr::read_csv(file="world_population.csv", na="-",
                                      comment="Not classified,INX,")
 ```
@@ -148,12 +228,49 @@ problems(world_population)$row
 Подробнее <https://r4ds.had.co.nz/tidy-data.html>
 
 
+```{r}
+wday_sales <-  read_csv(
+"nweek, d1, d2, d3, d4, d5,comment
+1,200,200,201,100,191,-
+2,200,200,301,500,191,super"
+)
+wday_sales
+```
+
+```{r}
+wday_narrow_sales <- wday_sales %>%   tidyr::pivot_longer(c("d1","d2","d3","d4","d5") ,names_to="day", values_to="sales")
+wday_narrow_sales
+```
+
+* * * 
+
+```{r}
+seasons_narrow
+```
+
+нужно преобразовать в 2 столбца
+
+```{r}
+seasons_narrow %>%   tidyr::pivot_wider(names_from = "indicator",values_from="value")
+```
+
+
+* * * 
+Возвращаемся к населению (population) по годам 
+
+```{r}
+str(world_population)
+```
+
+
+
+
 
 
 
 ```{r gather}
-long_world_population <- tidyr::gather(world_population,year, population,
-                                       -c(COUNTRY,COUNTRY_CODE,INDICATOR_NAME,
+long_world_population <- tidyr::gather(world_population,year, population, -c("COUNTRY","COUNTRY_CODE"
+                                        ,"INDICATOR_NAME",
                                           INDICATOR_CODE))
 ```
 
