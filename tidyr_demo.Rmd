@@ -74,6 +74,9 @@ seasons_narrow <- read_csv2(text_seasons_narrow, na='НД')
 ```{r}
 str(seasons_narrow)
 ```
+```{r}
+problems(seasons_narrow)
+```
 
 ```{r}
 seasons1 <- read_delim(text_seasons,delim=";")
@@ -89,7 +92,8 @@ str(seasons1)
 seasons <-
   read_csv2(  text_seasons
  ,
-   col_types = cols(.default = "d", season = "c")
+   col_types = cols(.default = "n", season = "c")
+ #                   default numberic , seaseon character (text)
   )
 
 seasons
@@ -104,7 +108,7 @@ problems(seasons)
 seasons <-
   read_csv2(  text_seasons
  ,
-   col_types = cols(.default = "d", season = "c")
+   col_types = cols(.default = "d", season = "c"), na=c('НД','-')
   )
 
 seasons
@@ -211,7 +215,12 @@ readr::write_lines(world_population_text,"world_population2.csv")
 ```
 
 ```{r}
-world_population <- readr::read_csv("world_population2.csv",na="-" , comment="Not classified,INX,") # escape_backslash=T,delim = ','
+world_population <- readr::read_csv("world_population2.csv",na="-" , comment="Not classified,INX,",
+col_types = cols(.default = "n", # numeric
+       COUNTRY="c", # character (text)
+       COUNTRY_CODE="c", # character (text)
+       INDICATOR_NAME=col_skip(),INDICATOR_CODE=col_skip())
+                                    )
 world_population
 
 ```
@@ -270,15 +279,13 @@ str(world_population)
 
 
 ```{r gather}
-long_world_population <- tidyr::gather(world_population,year, population, -c("COUNTRY","COUNTRY_CODE"
-                                        ,"INDICATOR_NAME",
-                                          INDICATOR_CODE))
+long_world_population <- tidyr::gather(world_population,year, population, -c("COUNTRY","COUNTRY_CODE"))
 ```
 
 
 
 ```{r}
-head(long_world_population,20)
+filter(long_world_population,COUNTRY %in% c("Brazil","Russian Federation")  & year %in% c(1960,1999,2010))
 ```
 
 
@@ -287,7 +294,7 @@ head(long_world_population,20)
 
 ```{r remove_columns}
 clean_world_population <-  long_world_population %>% 
-          select( -starts_with("INDICATOR")) 
+          select( -ends_with("CODE")) 
 print(clean_world_population)
 ```
 
