@@ -16,11 +16,12 @@ output:
 
 ??спользуем пакеты из набора `tidyverse`:
 
-* readr
-* tydyr
+* **readr**
+* **tydyr**
 * dplyr
 * stringr
 * tibble
+ 
   
 
 ### Сценарий 
@@ -44,7 +45,7 @@ library(tidyverse)
 
 ```{r}
 text_seasons <-  
-"season;fuel;energy
+"season;energy;fuel
 Зима;132;13,5
 Весна;100;10,5
 Лето;50;5
