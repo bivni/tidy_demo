@@ -84,8 +84,28 @@ cat(str_dup('*',times = 5),'\n')
 str_subset(rownames(mtcars),'\\d')
 
 ```
-
-
+ 
+ аналог paste
+```{r}
+str_c(letters,LETTERS,1:26,sep=' ',collapse = "; ")
+```    
+ 
+```{r}
+name="Ilya"
+language <- "R"
+str_glue("{name} loves {language}!")
+```
+ 
+```{r}
+str_glue_data(cars[1:5,],"speed: {speed} miles per hour\n  => stopping distance {dist} feets")
+```
+ 
+ 
+```{r}
+library(measures)
+str_glue_data(cars[1:5,],r"(speed: {conv_unit(speed,"mile","km")} km per hour\n  => stopping distance {conv_unit(dist,"feet","m)} meters)")
+``` 
+ 
 ### stringi -- богатый но сложный пакет
 
 ```{r}
@@ -106,7 +126,7 @@ head(text_countries)
 
 
 ```{r}
-str_view(text_countries, 'BR[NBA]')
+str_view(text_countries, 'BR[NBAI]')
 ```
 ```{r}
 str_view(text_countries, 'il',match = T)
@@ -164,14 +184,31 @@ str_view(text_countries, 'il\\b',match = T)
 
 ### Пример с подготовкой импорта
 ```{r}
-str_view(text_countries, pattern = '^(.*?)(,[A-Z]{3},.*)$',match = T)
+str_view(text_countries, pattern = r'{^(.*?)(,[A-Z]{3},.*)$}',match = T)
 ```
 
 ```{r}
 text2_countries <- str_replace(
             string = text_countries,
             pattern = '^(.*?)(,[A-Z]{3},.*)$',
-            replacement = '"\1"\2')
+            replacement = r'("\1"\2)')
 ```
 
+
+```{r}
+text2_countries[1:20]
+```
+```{r}
+world_population <- readr::read_csv(text2_countries,na="-" , comment="Not classified,INX,",
+col_types = cols(.default = "n", # numeric
+       COUNTRY="c", # character (text)
+       COUNTRY_CODE="c", # character (text)
+       INDICATOR_NAME=col_skip(),INDICATOR_CODE=col_skip())
+                                    )
+world_population
+
+```
+```{r}
+problems(world_population)
+```
 
