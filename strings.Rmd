@@ -58,6 +58,7 @@ stri_trans_general("Москва, метро Университет", "cyrillic-
 
 ```{r}
 library(readr)
+library(stringr)
 text_countries=read_lines("world_population.csv")
 head(text_countries)
 ```
@@ -121,8 +122,15 @@ str_view(text_countries, 'il\\b',match = T)
 
 
 ### Пример с подготовкой импорта
+```{r}
+str_view(text_countries, pattern = '^(.*?)(,[A-Z]{3},.*)$',match = T)
+```
 
 ```{r}
-
+text2_countries <- str_replace(
+            string = text_countries,
+            pattern = '^(.*?)(,[A-Z]{3},.*)$',
+            replacement = '"\1"\2')
 ```
+
 
