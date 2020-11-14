@@ -1,7 +1,9 @@
 ---
 title: "string functions"
-output: html_notebook
 author: "Ilya Kochergin"
+output:
+  html_document:
+    df_print: paged
 ---
 
 ## Сырые строки 
@@ -39,4 +41,88 @@ cat(r"{c:\Users\ikochergin\Documents}","\n")
   - str_detect
   - str_replace
   - 
+  - str_c
+  - str_glue
+  - str_glue_data
+
+* stringi -- богатый но сложный пакет
+
+```{r}
+library(stringi)
+stri_trans_general("Москва, метро Университет", "cyrillic-latin; nfd; [:nonspacing mark:] remove; nfc")
+```
+
+  А
+
+## Регулярные выражения
+
+```{r}
+library(readr)
+text_countries=read_lines("world_population.csv")
+head(text_countries)
+```
+
+
+```{r}
+str_view(text_countries, 'BR[NBA]')
+```
+```{r}
+str_view(text_countries, 'il',match = T)
+```
+
+Ищем слово кончающееся на `il` 
+
+```{r}
+str_view(text_countries, 'il\\b',match = T)
+```
+## С примерами  можно поиграться через визуальный интерфейс сайта regex101.com
+
+
+<https://regex101.com/r/Gx7Dcz/1> конец строки
+
+<https://regex101.com/r/rzd9XB/1> слово целиком
+
+<https://regex101.com/r/jUrQBO/1> классы символов
+
+
+<https://regex101.com/r/EtwAKb/1> цепочка гласных
+
+<https://regex101.com/r/ATNMJG/1> альтернатива
+
+<https://regex101.com/r/p9IkeS/1> greedy `*` 
+
+<https://regex101.com/r/V5o3Ei/1> non-greedy quantifiers `*?` 
+
+
+#### группы 
+
+<https://regex101.com/r/QIrvlI/1> 
+<https://regex101.com/r/56hy6b/1>  
+
+пример  применения нежадных квантификаторов `*?` и групп для подготовки файла к импорту. В файле проблемма: символ разделитель полей встречается в данных, нужно поле  в котором есть такая проблема окружить так: "Korea, Rep", KOR
+
+Сценарий 1. В первом поле текстового csv-файда название страны, содержащее запятую, являющуюся разделителем в этом файле. Нужно заменой окружить это поле в двойные кавычки.
+
+<https://regex101.com/r/jtL2Av/1>
+
+
+Сценарий 2.  В первом поле текстового csv-файда название страны, не обязательно  содержащее запятую или несколько запятых, являющуюся разделителем в этом файле. Следующий столбец -- это код страны, состоящий из 3 больших букв. Нужно заменой окружить первое поле с названием страны  в двойные кавычки.
+<https://regex101.com/r/JfpXXA/1>
+
+
+##### look ahead/behind 
+
+(когда нужно взять при помощи шаблона текст рядом с другой строкой, но не включать эту строку в результат поиска
+
+<https://regex101.com/r/a2S3Z3/1> 
+
+
+<https://regex101.com/r/9oiWUZ/1>
+
+
+### Пример с подготовкой импорта
+
+```{r}
+
+```
 
