@@ -1,0 +1,42 @@
+---
+title: "string functions"
+output: html_notebook
+author: "Ilya Kochergin"
+---
+
+## Сырые строки 
+
+
+В R версии 4.x.x появилисть raw string, в которых не обрабатываются `\`
+
+Обычные стоки :
+
+```{r}
+print("line 1\nline 2") # print выводит в программистском представлении
+cat("line 1\nline 2") # cat выводит оконччательный текст
+```
+
+Удваиваем `\\`
+```{r}
+cat("line 1\\nline 2")
+```
+
+Сырые \(raw\) строки и альтернативные кавычки 
+
+```{r}
+cat(r'{line 1\nline 2}',"\n")
+cat(r"(line 1\nline 2)","\n")
+cat(r"{c:\Users\ikochergin\Documents}","\n")
+```
+## Три группы строковых функций 
+
+* base - базовые ф-и
+   - grepl 
+   - gsub
+   - cat 
+   - paste
+* stringr из [tidyverse](https://stringr.tidyverse.org/articles/from-base.html) 
+  - str_detect
+  - str_replace
+  - 
+
