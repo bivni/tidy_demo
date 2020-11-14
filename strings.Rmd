@@ -15,7 +15,7 @@ output:
 
 ```{r}
 print("line 1\nline 2") # print выводит в программистском представлении
-cat("line 1\nline 2") # cat выводит оконччательный текст
+cat("line 1\nline 2") # cat выводит окончательный текст
 ```
 
 Удваиваем `\\`
@@ -28,31 +28,72 @@ cat("line 1\\nline 2")
 ```{r}
 cat(r'{line 1\nline 2}',"\n")
 cat(r"(line 1\nline 2)","\n")
-cat(r"{c:\Users\ikochergin\Documents}","\n")
+cat(r"{"c:\Users\ikochergin\Documents"}","\n")
 ```
+## Хитрые имена
+
+```{r}
+`my variable` <- 1
+```
+
+
+
 ## Три группы строковых функций 
 
-* base - базовые ф-и
+### base - базовые ф-и
    - grepl 
    - gsub
    - cat 
    - paste
-* stringr из [tidyverse](https://stringr.tidyverse.org/articles/from-base.html) 
-  - str_detect
-  - str_replace
-  - 
-  - str_c
-  - str_glue
-  - str_glue_data
+```{r}
+rownames(mtcars)
+cat(rep('*',5),"\n")
+grep(rownames(mtcars),pattern = '^Merc.*SL')
+```
+```{r}
+grepl(rownames(mtcars),pattern = '^Merc.*SL')
+cat(rep('*',5),"\n")
+mtcars[grepl(rownames(mtcars),pattern = '^Merc.*SL'),]
+```
+   
+```{r}
+cat(LETTERS,"END\n",sep=',')
+```
 
-* stringi -- богатый но сложный пакет
+```{r}
+paste(letters,LETTERS,1:26)
+```
+   
+```{r}
+paste(letters,LETTERS,1:26,sep=' ',collapse = "; ")
+```   
+### stringr из [tidyverse](https://stringr.tidyverse.org/articles/from-base.html) 
+
+- str_detect
+- str_replace
+- str_flatten
+- str_c
+- str_glue
+- str_glue_data
+
+### Примеры
+
+```{r}
+str_subset(rownames(mtcars),'\\d',negate = T)
+cat(str_dup('*',times = 5),'\n')
+str_subset(rownames(mtcars),'\\d')
+
+```
+
+
+### stringi -- богатый но сложный пакет
 
 ```{r}
 library(stringi)
 stri_trans_general("Москва, метро Университет", "cyrillic-latin; nfd; [:nonspacing mark:] remove; nfc")
 ```
 
-  А
+
 
 ## Регулярные выражения
 
