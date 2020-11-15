@@ -185,7 +185,7 @@ world_population[1:5,1:6]
 Считаем исходный файл в вектор строк, чтобы увидеть как проблемные строки выглядят в исходном файле. 
 
 ```{r read_lines}
-world_population_text <- readr::read_lines("world_population.csv")
+world_population_text <- read_lines("world_population.csv")
 world_population_text[1:3]
 ```
 
@@ -213,9 +213,27 @@ Congo, Dem. Rep.,COD,Population (Total),SP.POP.TOTL,15248246,15637715
 
 
 ```
-"xx,xxx"
+|<---->|<-------------63 ,столбца,------>|
 |xx,xxx|,xxx,xxx,xxx,.............,..,xxx|
-|<---->|<-------------63 столбца-------->|
+"xx,xxx"
+```
+пробуем на одной строке 
+
+```{r}
+test_str <- "Korea, Rep.,KOR,Population (Total),SP.POP.TOTL,25012374,25765673,26513030,27261747,27984155,28704674,29435571,30130983,30838302,31544266,32240827,32882704,33505406,34103149,34692266,35280725,35848523,36411795,36969185,37534236,38123775,38723248,39326352,39910403,40405956,40805744,41213674,41621690,42031247,42449038,42869283,43295704,43747962,44194628,44641540,45092991,45524681,45953580,46286503,46616677,47008111,47357362,47622179,47859311,48039415,48138077,48371946,48597652,48948698,49182038,49410366,49779440,50004441, - , - , - , - , - , - , - " 
+commas_pos <- str_locate_all(test_str,fixed(","))[[1]]
+
+columns_boundaries <- invert_match(commas_pos)
+# columns_boundaries 
+two_part_boundaries <- columns_boundaries[2:3,]
+two_part_boundaries[2,"end"] <- -1
+two_part_boundaries[1,"start"] <- 0
+two_part_boundaries
+str_sub(string=test_str,two_part_boundaries[,"start"],two_part_boundaries[,"end"])
+```
+
+```{r}
+str_flatten(str_sub(test_str,columns_boundaries[1:2]),collapse=',')
 ```
 
 ```{r}
