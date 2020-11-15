@@ -79,6 +79,7 @@ paste(letters,LETTERS,1:26,sep=' ',collapse = "; ")
 ### Примеры
 
 ```{r}
+library(stringr)
 str_subset(rownames(mtcars),'\\d',negate = T)
 cat(str_dup('*',times = 5),'\n')
 str_subset(rownames(mtcars),'\\d')
@@ -99,10 +100,13 @@ str_glue("{name} loves {language}!")
 ```{r}
 str_glue_data(cars[1:5,],"speed: {speed} miles per hour\n  => stopping distance {dist} feets")
 ```
+```{r}
+library(measurements)
+conv_unit(1,"mile","km")
+```
  
  
 ```{r}
-library(measures)
 str_glue_data(cars[1:5,],r"(speed: {conv_unit(speed,"mile","km")} km per hour\n  => stopping distance {conv_unit(dist,"feet","m)} meters)")
 ``` 
  
@@ -203,7 +207,8 @@ world_population <- readr::read_csv(text2_countries,na="-" , comment="Not classi
 col_types = cols(.default = "n", # numeric
        COUNTRY="c", # character (text)
        COUNTRY_CODE="c", # character (text)
-       INDICATOR_NAME=col_skip(),INDICATOR_CODE=col_skip())
+       # don't import this columns:
+       INDICATOR_NAME=col_skip(),INDICATOR_CODE=col_skip()) 
                                     )
 world_population
 
