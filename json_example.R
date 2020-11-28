@@ -14,7 +14,7 @@ prognoz_temp <- tibble(
   temp = map_dbl( weathers_list, c("main","temp"))
 )
 
-
+prognoz_temp
 #
 # Задача 
 # добавить стобцы wind_deg и wind_speed 
