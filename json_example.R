@@ -13,4 +13,9 @@ prognoz_temp <- tibble(
   time = ymd_hms(map_chr( weathers_list, "dt_txt")),
   temp = map_dbl( weathers_list, c("main","temp"))
 )
-prognoz_temp %>% filter()
+
+
+#
+# Задача 
+# добавить стобцы wind_deg и wind_speed 
+#
