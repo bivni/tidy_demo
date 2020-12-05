@@ -1,0 +1,29 @@
+---
+title: "Python demo"
+output: html_notebook
+---
+
+## Install
+
+```{r}
+install.packages("reticulate")
+```
+
+```{r}
+library(reticulate)
+use_virtualenv(virtualenv = "py38")
+```
+
+```{r}
+library(tidyverse)
+df1 <- tribble(
+  ~x, ~y,
+  0, 5,
+  1, 6,
+  2, 7,
+  3, 9
+  )
+df1
+
+```
+
