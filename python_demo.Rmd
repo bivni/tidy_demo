@@ -11,7 +11,7 @@ install.packages("reticulate")
 
 ```{r}
 library(reticulate)
-use_virtualenv(virtualenv = "py38")
+# use_virtualenv(virtualenv = "py38")
 ```
 
 ```{r}
@@ -25,5 +25,21 @@ df1 <- tribble(
   )
 df1
 
+```
+
+```{python}
+print(r.df1)
+```
+
+```{python}
+var1=234
+```
+
+
+```{python}
+print(var1)
+```
+```{r}
+py$var1
 ```
 
