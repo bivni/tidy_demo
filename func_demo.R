@@ -49,6 +49,8 @@ list1$city2$pop
 get_pop <- function ( litem) { litem [["pop"]] }
 lapply(list1, get_pop)
 sapply(list1, get_pop)
+v1 <- sapply(list1, get_pop)
+str(v1)
 
 get_city_par <- function ( litem, par) { litem [[par]] }
 lapply(list1, get_city_par, "name")
