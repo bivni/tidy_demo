@@ -327,3 +327,38 @@ while(z >= 3 && z <= 5) {
 }
 ```
 
+
+
+
+создаем randowm_walk_df
+```{r,message=F}
+library(tidyverse)
+```
+
+
+```{r}
+randowm_walk_df=tibble(step=integer(0), co_x=numeric(0),co_y=numeric(0))
+```
+
+```{r}
+step=1
+x <- 5
+y <- 5
+while(x >= 3 && x <= 10 && y >= 3 && y <= 10) {
+  coin_x <- rbinom(1, 1, 0.5)
+  coin_y <- rbinom(1, 1, 0.5)
+
+  x <- x + if (coin_x==1) 1 else -1
+  y <- y + if (coin_y==1) 1 else -1
+  
+  randowm_walk_df=rbind(randowm_walk_df,
+                         tibble(step=step, co_x=x,co_y=y))
+  step <- step +1 
+  }
+```
+
+```{r}
+randowm_walk_df
+```
+
+
