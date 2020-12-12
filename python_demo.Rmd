@@ -38,6 +38,8 @@ var1=234
 
 ```{python}
 print(var1)
+xxx= "many" if var1>100 else "few"
+print(xxx)
 ```
 ```{r}
 py$var1
