@@ -177,7 +177,7 @@ switch(EXPR = signal_name,go="green",ready="yellow",stop=,full_stop="red")
 
 выдает приглашение к вводу, запрашивает  и считывает ввод пользователя.
 
-```{r, results="hide"}
+```{r, results="hide",eval=FALSE}
 repeat {
   answ <-  readline(prompt = "enter number (or q to exti): ")
   if(answ=="q" || answ =="Q") { print("goodbye!") ; break}
