@@ -23,17 +23,29 @@ print_cnt()
 print_cnt(20)
 print_cnt()
 
+my_scatter_plot <- function(x,y,char_color="magenta") {
+  plot(x,y,col=char_color,pch='*',lwd=1.5,cex=2)
+}
 
+my_scatter_plot(cars$speed,cars$dist)
+my_scatter_plot(cars$speed,cars$dist,char_color = "dark grey")
 
+## ... -- optional argumemts (Ð¿ÐµÑ€ÐµÐ´Ð°Ð²Ð°Ñ‚ÑŒ Ð´Ñ€ÑƒÐ³Ð¾Ð¹ Ñ„ÑƒÐ½ÐºÑ†Ð¸Ð¸)
 
-## ... -- optional argumemts (ïåðåäàâàòü äðóãîé ôóíêöèè)
-
-### Ïðèìåð ñ ôóíöèåé áàçîâîé ãðàôèêè ñ ñ ëèíåéíîé ëèíèåé òðåíäà è äîï ïàðàìåòðàìè
-##  Ó ôóíöêèè plot( x,y,... ) ìíîãî äîï. ïàðàìåòðîâ
-## ñì.  ?par   
+### ÐŸÑ€Ð¸Ð¼ÐµÑ€ Ñ Ñ„ÑƒÐ½Ñ†Ð¸ÐµÐ¹ Ð±Ð°Ð·Ð¾Ð²Ð¾Ð¹ Ð³Ñ€Ð°Ñ„Ð¸ÐºÐ¸ Ñ Ñ Ð»Ð¸Ð½ÐµÐ¹Ð½Ð¾Ð¹ Ð»Ð¸Ð½Ð¸ÐµÐ¹ Ñ‚Ñ€ÐµÐ½Ð´Ð° Ð¸ Ð´Ð¾Ð¿ Ð¿Ð°Ñ€Ð°Ð¼ÐµÑ‚Ñ€Ð°Ð¼Ð¸
+##  Ð£ Ñ„ÑƒÐ½Ñ†ÐºÐ¸Ð¸ plot( x,y,... ) Ð¼Ð½Ð¾Ð³Ð¾ Ð´Ð¾Ð¿. Ð¿Ð°Ñ€Ð°Ð¼ÐµÑ‚Ñ€Ð¾Ð²
+## ÑÐ¼.  ?par   
 ## lwd -line width
-## pch - point char ñì. ?points
+## pch - point char ÑÐ¼. ?points
 ## cex - char expasion (size)
-## col
-dev.off()
-plot(cars$speed,cars$dist,col="dark green",pch=11,cex=5,lwd=3)
+## col - color
+plot(cars$speed,cars$dist,col="dark green",pch=25,cex=3,lwd=3)
+abline(lm(dist~speed,data = cars), col="red",lwd=3,lty=8)
+
+my_plot_with_lm <- function(formula,df,...) {
+  plot(formula,data=df,...)
+  abline(lm(formula,data=df ), col="red",lwd=3,lty=8)
+}
+my_plot_with_lm(formula=dist~speed, df=cars)
+plot.new()
+my_plot_with_lm(formula=dist~speed, df=cars,col="tan2",lwd=2,main="Ñ‚Ð¾Ñ€Ð¼Ð¾Ð·Ð½Ð¾Ð¹ Ð¿ÑƒÑ‚ÑŒ Ð¾Ñ‚ ÑÐºÐ¾Ñ€Ð¾ÑÑ‚Ð¸")  
