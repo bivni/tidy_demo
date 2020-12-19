@@ -42,11 +42,12 @@ my_scatter_plot(cars$speed,cars$dist,char_color = "dark grey")
 plot(cars$speed,cars$dist,col="dark green",pch=25,cex=3,lwd=3)
 abline(lm(dist~speed,data = cars), col="red",lwd=3,lty=8)
 
-my_plot_with_lm <- function(formula,df,...) {
+my_plot_with_lm <- function(formula,df,ab_color=turquoise3",...) {
   plot(formula,data=df,...)
   abline(lm(formula,data=df ), col="red",lwd=3,lty=8)
 }
 my_plot_with_lm(formula=dist~speed, df=cars)
 plot.new()
-my_plot_with_lm(formula=dist~speed, df=cars,col="tan2",lwd=2,main="тормозной путь от скорости")  
+colors()
+my_plot_with_lm(formula=dist~speed, df=cars,col="tomato4"  ,lwd=2,main="тормозной путь от скорости")  
 my_plot_with_lm(df=mtcars, formula = mpg~disp,main="Экономичность зависит от объема двигателя")
