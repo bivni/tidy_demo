@@ -93,12 +93,12 @@ if(age < 20 && age>=10) { print("Teenager")}
 ```
 
 ```{r}
-# help(`&`)
+ help(`&`)
 ```
 
 ```{r}
 age <- NA
-if(!is.na(age) && age < 20 && age>=10) {
+if ( !is.na(age) &&  age < 20 && age>=10) {
     print("Teenager")
 } else 
   print("Other age category")
@@ -157,7 +157,7 @@ switch(EXPR = ncolor, "green","yellow","blue" )
 ### switch со строковым выражением выбора
 
 ```{r}
-signal_name = "stop"
+signal_name = "full_stop"
 switch(EXPR = signal_name,go="green",ready="yellow",stop=,full_stop="red")
 ```
 
@@ -212,6 +212,10 @@ enter number (or q to exti): q
 
 
 Переменная `var` по очереди принимает значение каждого элемента последовательноси  и выполнят с таким значением переменной группу операторов, которая составляет тело цикла.
+```{r}
+for (ii in 1:10)
+  cat(ii, ii^3,'\n')
+```
 
 ```{r}
 for( i in list(a=1:10,b="abc",c=1:2))
@@ -316,7 +320,7 @@ sum(vv)
 
 ```{r}
 z <- 5
-while(z >= 3 && z <= 5) {
+while(z >= 3 && z <= 10) {
   cat(z,' ')
   coin <- rbinom(1, 1, 0.5)
   if(coin == 1) { ## random walk
@@ -335,7 +339,14 @@ while(z >= 3 && z <= 5) {
 library(tidyverse)
 ```
 
-
+                        df1
+    rbind(df1, df2 ) -> ___
+                        df2
+                        
+                            
+    cbind(df1, df2 ) -> df1 | df2
+    
+    
 ```{r}
 randowm_walk_df=tibble(step=integer(0), co_x=numeric(0),co_y=numeric(0))
 ```
@@ -360,5 +371,65 @@ while(x >= 3 && x <= 10 && y >= 3 && y <= 10) {
 ```{r}
 randowm_walk_df
 ```
+
+```{r}
+ifelse(randowm_walk_df$co_x>3, "go right", "go left")
+```
+```{r}
+dplyr::if_else(randowm_walk_df$co_x>3, "go right", "go left","don't know")
+```
+```{r}
+dplyr::case_when()
+```
+
+```{r}
+age_vec <- c(12,5,50,31)
+age_vec <- set_names(age_vec,"person_A","person_B","person_C","person_D")
+```
+
+```{r}
+age_vec
+```
+```r
+if(age<11){
+  print("Child")
+} else if(age<20) {
+  print("Teenager")    
+} else if (age<45) {
+  print("young")
+} else {
+  print("young forever")
+}
+```
+
+```{r}
+message <- case_when(
+  (age_vec <11) ~ "Child",
+  age_vec < 20 ~ "Teenager",
+  age_vec < 45 ~ "Young",
+  TRUE        ~ "young forever"
+          )
+age_vec
+message
+```
+
+```{r}
+x <- 1:50
+case_when(
+  x %% 35 == 0 ~ "fizz buzz",
+  x %% 5 == 0 ~ "fizz",
+  x %% 7 == 0 ~ "buzz",
+  TRUE ~ as.character(x)
+)
+
+```
+
+
+## function & global var 
+```{r}
+cube <- function (x) x^3
+cube(age_vec)
+```
+
 
 
