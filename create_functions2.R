@@ -49,3 +49,4 @@ my_plot_with_lm <- function(formula,df,...) {
 my_plot_with_lm(formula=dist~speed, df=cars)
 plot.new()
 my_plot_with_lm(formula=dist~speed, df=cars,col="tan2",lwd=2,main="тормозной путь от скорости")  
+my_plot_with_lm(df=mtcars, formula = mpg~disp,main="Экономичность зависит от объема двигателя")
