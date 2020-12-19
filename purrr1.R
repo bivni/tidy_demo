@@ -52,3 +52,9 @@ keep(mtcars$hp, ~.x>200)
 
 mtcars[ map_lgl(mtcars$hp, ~.x>200), ]
 
+## hist -- гисторрамма в базовой графике
+library(tidyverse)
+class_v <- unique(mpg$class)
+hist_func=function(cls) hist(mpg$cyl[mpg$class==cls], main=cls,xlab="cyl",breaks = 0.5+-1:8)
+walk(.x = class_v, .f= hist_func  )
+hist(mpg$cyl[mpg$class=="suv"])
